@@ -1,0 +1,15 @@
+
+/* Shadow helper used on cards in workout-create.html */
+.card-shadow {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+
+/* Validation border for Thymeleaf’s .is-invalid class */
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+/* Hey Aaron, you can remove this if you prefer Bootstrap’s default */
+body {
+    font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+}

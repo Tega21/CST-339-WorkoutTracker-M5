@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>My Workouts</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-5">
+
+        <h2><span th:text="${session.currentUser}">User</span>'s Workouts</h2>
+
+        <br>
+
+        <table class="table table-striped">
+            <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Exercise</th>
+                <th>Muscle Group</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Weight&nbsp;(lbs)</th>
+                <th>Date</th>
+                <th>Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="workout : ${workouts}">
+                <td th:text="${workout.id}"></td>
+                <td th:text="${workout.exerciseName}"></td>
+                <td th:text="${workout.muscleGroup}"></td>
+                <td th:text="${workout.sets}"></td>
+                <td th:text="${workout.reps}"></td>
+                <td th:text="${workout.weight}"></td>
+                <td th:text="${#dates.format(workout.workoutDate, 'MM/dd/yyyy')}"></td>
+                <td th:text="${workout.notes}"></td>
+                <td>
+     				<a th:href="@{/workouts/{id}/edit(id=${workout.id})}" class="btn btn-sm btn-warning me-1">
+          			Edit
+       			 	</a>
+                <td>
+					<form th:action="@{/workouts/{id}/delete(id=${workout.id})}" method="post" style="display:inline">
+    				<button type="submit" class="btn btn-danger" onclick="return confirm('Delete this workout?');">
+      				Delete
+    				</button>
+  					</form>
+ 				</td>
+                
+                
+            </tr>
+            </tbody>
+        </table>
+        <br><br>
+        <a th:href="@{/workouts/create}" class="btn btn-primary">+ Add Workout</a>
+
+    </div>
+</div>
+</body>
+</html>
