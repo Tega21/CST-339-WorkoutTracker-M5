@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      layout:decorate="~{layouts/layout}">
 <head>
     <title>My Workouts</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
@@ -38,18 +37,6 @@
                 <td th:text="${workout.weight}"></td>
                 <td th:text="${#dates.format(workout.workoutDate, 'MM/dd/yyyy')}"></td>
                 <td th:text="${workout.notes}"></td>
-                <td>
-     				<a th:href="@{/workouts/{id}/edit(id=${workout.id})}" class="btn btn-sm btn-warning me-1">
-          			Edit
-       			 	</a>
-                <td>
-					<form th:action="@{/workouts/{id}/delete(id=${workout.id})}" method="post" style="display:inline">
-    				<button type="submit" class="btn btn-danger" onclick="return confirm('Delete this workout?');">
-      				Delete
-    				</button>
-  					</form>
- 				</td>
-                    
             </tr>
             </tbody>
         </table>

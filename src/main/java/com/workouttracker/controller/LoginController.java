@@ -53,7 +53,7 @@ public class LoginController {
      * @param session HTTP session for storing login state
      * @return login form (on failure) or redirect to dashboard (on success)
      */
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public String processLogin(@Valid @ModelAttribute LoginPrincipal loginPrincipal,
                                BindingResult result,
                                Model model,
@@ -71,8 +71,9 @@ public class LoginController {
 
         model.addAttribute("errorMessage", "Invalid credentials");
         return "pages/login";
-    }
-
+    }	
+    */
+    
     /**
      * Handles user logout.
      * Clears session data and redirects to home page.
