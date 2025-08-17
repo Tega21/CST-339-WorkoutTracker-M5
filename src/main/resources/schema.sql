@@ -1,10 +1,12 @@
+-- Drop tables if they exist (for clean setup)
 DROP TABLE IF EXISTS workouts;
 DROP TABLE IF EXISTS users;
 
+-- Users table for login/registration
 CREATE TABLE users (
                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
                        username VARCHAR(50) UNIQUE NOT NULL,
-                       password VARCHAR(100) NOT NULL,  -- BCrypt passwords need 60 chars, using 100 for safety
+                       password VARCHAR(100) NOT NULL,
                        first_name VARCHAR(50),
                        last_name VARCHAR(50),
                        email VARCHAR(100) UNIQUE NOT NULL,
@@ -13,6 +15,7 @@ CREATE TABLE users (
                        active BOOLEAN DEFAULT TRUE
 );
 
+-- Workouts table
 CREATE TABLE workouts (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                           user_id BIGINT NOT NULL,
@@ -24,13 +27,9 @@ CREATE TABLE workouts (
                           workout_date DATE,
                           notes TEXT,
                           created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                          FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Insert demo users with BCrypt encoded passwords
--- Password for all demo users: password123
--- BCrypt encoded version: $2a$10$N9qo8uLOickgx2ZMRZoHKeFiqVD/7fNTJ1jO7ap6CkYJNqEzVqZWm
-INSERT INTO users (username, password, first_name, last_name, email) VALUES
-                                                                         ('demo', '$2a$10$N9qo8uLOickgx2ZMRZoHKeFiqVD/7fNTJ1jO7ap6CkYJNqEzVqZWm', 'Demo', 'User', 'demo@test.com'),
-                                                                         ('john', '$2a$10$N9qo8uLOickgx2ZMRZoHKeFiqVD/7fNTJ1jO7ap6CkYJNqEzVqZWm', 'John', 'Doe', 'john@test.com'),
-                                                                         ('jane', '$2a$10$N9qo8uLOickgx2ZMRZoHKeFiqVD/7fNTJ1jO7ap6CkYJNqEzVqZWm', 'Jane', 'Smith', 'jane@test.com');
+-- Insert demo user for testing
+INSERT INTO users (username, password, first_name, last_name, email)
+VALUES ('demo', 'password123', 'Demo', 'User', 'demo@test.com');

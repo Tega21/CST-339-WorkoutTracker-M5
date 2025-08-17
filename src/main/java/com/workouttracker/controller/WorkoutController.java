@@ -6,8 +6,6 @@ import com.workouttracker.service.WorkoutService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +17,6 @@ public class WorkoutController {
 
     @Autowired
     private WorkoutBusinessServiceInterface workoutService;
-    
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
     // Show create workout form
     @GetMapping("/create")
@@ -40,13 +36,12 @@ public class WorkoutController {
         }
 
         // Get user ID from session
-        //Long userId = (Long) session.getAttribute("userId");
-        if (auth == null || !auth.isAuthenticated()) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
             return "redirect:/login";
         }
 
         // Set the user ID on the workout
-        Long userId = (Long) auth.getCredentials();
         workout.setUserId(userId);
         workoutService.createWorkout(workout);
         return "redirect:/workouts";
@@ -54,9 +49,8 @@ public class WorkoutController {
     
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model, HttpSession session) {
-        //Long userId = (Long) session.getAttribute("userId");
-    	Long userId = (Long) auth.getCredentials();
-        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) return "redirect:/login";
         Workout w = workoutService.findByIdForUser(id, userId);
         if (w == null) return "redirect:/workouts";
         model.addAttribute("workout", w);
@@ -66,9 +60,8 @@ public class WorkoutController {
     @PostMapping("/{id}/edit")
     public String updateWorkout(@PathVariable("id") Long id, @Valid @ModelAttribute("workout") Workout workout,
             BindingResult result, Model model, HttpSession session) {
-    	//Long userId = (Long) session.getAttribute("userId");
-    	Long userId = (Long) auth.getCredentials();
-    	if(auth == null || !auth.isAuthenticated())return"redirect:/login";
+    	Long userId = (Long) session.getAttribute("userId");
+    	if(userId==null)return"redirect:/login";
     	if(result.hasErrors()) {
     		workout.setId(id);
     		model.addAttribute("workout", workout);
@@ -89,9 +82,8 @@ public class WorkoutController {
     // List all workouts
     @GetMapping
     public String listWorkouts(Model model, HttpSession session) {
-        //Long userId = (Long) session.getAttribute("userId");
-    	Long userId = (Long) auth.getCredentials();
-    	if(auth == null || !auth.isAuthenticated()) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
             return "redirect:/login";
         }
 

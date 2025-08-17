@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8"/>
   <title>Edit Workout</title>
@@ -23,38 +22,33 @@
 
     <div class="col-md-6">
       <label class="form-label">Exercise Name</label>
-      <input class="form-control" th:name="${_csrf.exerciseName}" th:value="${_csrf.token}"/>
-      <!-- <input class="form-control" th:field="*{exerciseName}" required> -->
+      <input class="form-control" th:field="*{exerciseName}" required>
       <div class="text-danger" th:if="${#fields.hasErrors('exerciseName')}"
            th:errors="*{exerciseName}"></div>
     </div>
 
     <div class="col-md-6">
       <label class="form-label">Muscle Group</label>
-      <input class="form-control" th:name="${_csrf.muscleGroup}" th:value="${_csrf.token}"/>
-      <!-- <input class="form-control" th:field="*{muscleGroup}" required> -->
+      <input class="form-control" th:field="*{muscleGroup}" required>
       <div class="text-danger" th:if="${#fields.hasErrors('muscleGroup')}"
            th:errors="*{muscleGroup}"></div>
     </div>
 
     <div class="col-md-4">
       <label class="form-label">Sets</label>
-      <input class="form-control" type="number" min="1" th:name="${_csrf.sets}" min="1" th:field="*{sets}" th:value="${_csrf.token}"/>
-      <!-- <input  type="number" min="1" th:field="*{sets}" required> -->
+      <input class="form-control" type="number" min="1" th:field="*{sets}" required>
       <div class="text-danger" th:if="${#fields.hasErrors('sets')}" th:errors="*{sets}"></div>
     </div>
 
     <div class="col-md-4">
       <label class="form-label">Reps</label>
-      <input class="form-control" type="number" min="1" th:name="${_csrf.reps}" th:value="${_csrf.token}"/>
-      <!-- <input class="form-control" type="number" min="1" th:field="*{reps}" required> -->
+      <input class="form-control" type="number" min="1" th:field="*{reps}" required>
       <div class="text-danger" th:if="${#fields.hasErrors('reps')}" th:errors="*{reps}"></div>
     </div>
 
     <div class="col-md-4">
       <label class="form-label">Weight</label>
-      <input class="form-control" type="number" min="0" step="1" th:name="${_csrf.weight}" th:value="${_csrf.token}"/>
-      <!-- <input class="form-control" type="number" min="0" step="1" th:field="*{weight}">-->
+      <input class="form-control" type="number" min="0" step="1" th:field="*{weight}">
       <div class="text-danger" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></div>
     </div>
 
